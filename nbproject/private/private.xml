@@ -5,10 +5,13 @@
         <group>
             <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/reservacion/frontend/RegistradorReservacion.java</file>
             <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/baseDatos/ManejadorBaseDatos.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/usuario/backend/ManejadorFrontEndUsuario.java</file>
+            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/menu/backend/ManejadorMenu.java</file>
             <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/frontend/HotelDescktop.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/usuario/frontend/SolicitadorUsuario.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/usuario/ManejadorUsuario.java</file>
+            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/alojamiento/frontend/ReporteAlojamientos.java</file>
+            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/menu/frontend/Alojamiento.java</file>
+            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/reservacion/backend/ManejadorReservacion.java</file>
+            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/cliente/backend/ManejadorCliente.java</file>
+            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/habitacion/backend/ManejadorHabitacion.java</file>
         </group>
     </open-files>
 </project-private>

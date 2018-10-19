@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.LinkedList;
 import project.cliente.backend.Cliente;
+import project.consumo.backend.Consumo;
 import project.habitacion.backend.Habitacion;
 import project.menu.backend.Menu;
 import project.reservacion.backend.Reservacion;
@@ -224,6 +225,19 @@ public class ManejadorBaseDatos {
         return habitaciones;
     }
 
+    public void updateHabitacion(String accion, String dato1, String dato2) {
+        try {
+            declaracion = connection.createStatement();
+            sentencia = connection.prepareStatement(accion);
+            sentencia.setString(1, dato1);
+            sentencia.setString(2, dato2);
+            sentencia.executeUpdate();
+            sentencia.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
     public Cliente getCliente(String consulta, String dato) {
         Cliente cliente = null;
         try {
@@ -281,6 +295,21 @@ public class ManejadorBaseDatos {
             sentencia.setString(2, cliente.getNombre());
             sentencia.setString(3, cliente.getApellido());
             sentencia.setInt(4, cliente.getTelefono());
+            sentencia.executeUpdate();
+            sentencia.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void updateCliente(String accion, Cliente cliente) {
+        try {
+            declaracion = connection.createStatement();
+            sentencia = connection.prepareStatement(accion);
+            sentencia.setString(1, cliente.getNombre());
+            sentencia.setString(2, cliente.getApellido());
+            sentencia.setInt(3, cliente.getTelefono());
+            sentencia.setInt(4, cliente.getDpi());
             sentencia.executeUpdate();
             sentencia.close();
         } catch (Exception e) {
@@ -352,4 +381,18 @@ public class ManejadorBaseDatos {
         }
     }
 
+    public void setConsumo(String accion, Consumo consumo){
+        try {
+            declaracion = connection.createStatement();
+            sentencia = connection.prepareStatement(accion);
+            sentencia.setInt(1, consumo.getIdMenu());
+            sentencia.setInt(2, consumo.getIdReservacion());
+            sentencia.setDouble(3, consumo.getMonto());
+            sentencia.executeUpdate();
+            sentencia.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+    
 }

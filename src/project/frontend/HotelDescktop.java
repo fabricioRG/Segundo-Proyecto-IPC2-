@@ -12,10 +12,15 @@ import project.menu.frontend.DeshabilitadorMenu;
 import project.menu.frontend.ModificadorMenu;
 import project.alojamiento.frontend.RegistradorAlojamiento;
 import project.alojamiento.frontend.ReporteAlojamientos;
+import project.alojamiento.frontend.ReporteAlojamientosCliente;
+import project.alojamiento.frontend.ReporteAlojamientosHabitacion;
+import project.cliente.frontend.ModificadorCliente;
 import project.menu.frontend.ReporteMenu;
 import project.cliente.frontend.RegistradorCliente;
 import project.cliente.frontend.ReporteClientes;
+import project.habitacion.frontend.ModificadorPrecio;
 import project.menu.frontend.CreadorMenu;
+import project.menu.frontend.TomarPedido;
 import project.reservacion.frontend.CanceladorReservacion;
 import project.reservacion.frontend.RegistradorReservacion;
 import project.reservacion.frontend.ReporteReservaciones;
@@ -32,10 +37,9 @@ import project.usuario.frontend.SolicitadorUsuario;
  */
 public class HotelDescktop extends javax.swing.JFrame {
 
-    
     private BaseDatos DB = null;
     private Usuario usuario = null;
-    
+
     /**
      * Creates new form HotelDescktop
      */
@@ -72,6 +76,8 @@ public class HotelDescktop extends javax.swing.JFrame {
         jMenuItemRepMenu = new javax.swing.JMenuItem();
         jMenuItemModMen = new javax.swing.JMenuItem();
         jMenuItemDeshaMenu = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItemModPre = new javax.swing.JMenuItem();
         jMenuRecepcion = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItemRegistrar = new javax.swing.JMenuItem();
@@ -80,10 +86,17 @@ public class HotelDescktop extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItemRegAloj = new javax.swing.JMenuItem();
         jMenuItemRepAloj = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItemAlojHab = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItemRegClie = new javax.swing.JMenuItem();
+        jMenuItemModClie = new javax.swing.JMenuItem();
         jMenuItemRepClie = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuRestaurante = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItemTomarPed = new javax.swing.JMenuItem();
         jMenuOpciones = new javax.swing.JMenu();
         jMenuItemCambiar = new javax.swing.JMenuItem();
         jMenuItemSalir = new javax.swing.JMenuItem();
@@ -101,20 +114,20 @@ public class HotelDescktop extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(PrincipalDesktop, javax.swing.GroupLayout.PREFERRED_SIZE, 1128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(552, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(PrincipalDesktop)
+                .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(labelInformacion)
-                .addGap(0, 0, 0)
-                .addComponent(PrincipalDesktop, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PrincipalDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jMenuGerente.setText("Gerente");
@@ -192,6 +205,18 @@ public class HotelDescktop extends javax.swing.JFrame {
 
         jMenuGerente.add(jMenu5);
 
+        jMenu6.setText("Habitacion");
+
+        jMenuItemModPre.setText("Modificar Precio / Reportes");
+        jMenuItemModPre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemModPreActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItemModPre);
+
+        jMenuGerente.add(jMenu6);
+
         menuBar.add(jMenuGerente);
 
         jMenuRecepcion.setText("Recepcion");
@@ -243,6 +268,22 @@ public class HotelDescktop extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItemRepAloj);
 
+        jMenuItem3.setText("Reporte Alojamiento Cliente");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        jMenuItemAlojHab.setText("Reporte Alojamiento Habitacion");
+        jMenuItemAlojHab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAlojHabActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItemAlojHab);
+
         jMenuRecepcion.add(jMenu3);
 
         jMenu4.setText("Cliente");
@@ -255,6 +296,14 @@ public class HotelDescktop extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItemRegClie);
 
+        jMenuItemModClie.setText("Modificar Cliente");
+        jMenuItemModClie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemModClieActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItemModClie);
+
         jMenuItemRepClie.setText("Reporte Clientes");
         jMenuItemRepClie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,10 +314,35 @@ public class HotelDescktop extends javax.swing.JFrame {
 
         jMenuRecepcion.add(jMenu4);
 
+        jMenu8.setText("Registrar egreso");
+
+        jMenuItem2.setText("Cobrar monto Total");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem2);
+
+        jMenuRecepcion.add(jMenu8);
+
         menuBar.add(jMenuRecepcion);
 
         jMenuRestaurante.setText("Restaurante");
         jMenuRestaurante.setVisible(false);
+
+        jMenu7.setText("Servicio-Habitacion");
+
+        jMenuItemTomarPed.setText("Tomar pedido");
+        jMenuItemTomarPed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTomarPedActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItemTomarPed);
+
+        jMenuRestaurante.add(jMenu7);
+
         menuBar.add(jMenuRestaurante);
 
         jMenuOpciones.setText("Opciones");
@@ -297,15 +371,11 @@ public class HotelDescktop extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -456,6 +526,55 @@ public class HotelDescktop extends javax.swing.JFrame {
         ra.show();
     }//GEN-LAST:event_jMenuItemRepAlojActionPerformed
 
+    private void jMenuItemModClieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModClieActionPerformed
+        ModificadorCliente mc = new ModificadorCliente(DB, usuario);
+        PrincipalDesktop.add(mc);
+        Dimension desktopSize = PrincipalDesktop.getSize();
+        Dimension FrameSize = mc.getSize();
+        mc.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
+        mc.show();
+    }//GEN-LAST:event_jMenuItemModClieActionPerformed
+
+    private void jMenuItemModPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModPreActionPerformed
+        ModificadorPrecio mp = new ModificadorPrecio(DB, usuario);
+        PrincipalDesktop.add(mp);
+        Dimension desktopSize = PrincipalDesktop.getSize();
+        Dimension FrameSize = mp.getSize();
+        mp.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
+        mp.show();
+    }//GEN-LAST:event_jMenuItemModPreActionPerformed
+
+    private void jMenuItemTomarPedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTomarPedActionPerformed
+        TomarPedido tp = new TomarPedido(DB);
+        PrincipalDesktop.add(tp);
+        Dimension desktopSize = PrincipalDesktop.getSize();
+        Dimension FrameSize = tp.getSize();
+        tp.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
+        tp.show();
+    }//GEN-LAST:event_jMenuItemTomarPedActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ReporteAlojamientosCliente rac = new ReporteAlojamientosCliente(DB, usuario);
+        PrincipalDesktop.add(rac);
+        Dimension desktopSize = PrincipalDesktop.getSize();
+        Dimension FrameSize = rac.getSize();
+        rac.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
+        rac.show();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItemAlojHabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAlojHabActionPerformed
+        ReporteAlojamientosHabitacion rah = new ReporteAlojamientosHabitacion(DB, usuario);
+        PrincipalDesktop.add(rah);
+        Dimension desktopSize = PrincipalDesktop.getSize();
+        Dimension FrameSize = rah.getSize();
+        rah.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
+        rah.show();
+    }//GEN-LAST:event_jMenuItemAlojHabActionPerformed
+
     private void modificarItems() {
         Color color = null;
         String tipoUsuario = " ";
@@ -475,7 +594,7 @@ public class HotelDescktop extends javax.swing.JFrame {
         menuBar.setBackground(color);
         labelInformacion.setText(usuario.getNombre() + " " + usuario.getApellido() + " / " + tipoUsuario);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -487,15 +606,23 @@ public class HotelDescktop extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenuGerente;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItemAlojHab;
     private javax.swing.JMenuItem jMenuItemCambiar;
     private javax.swing.JMenuItem jMenuItemCrearMenu;
     private javax.swing.JMenuItem jMenuItemCrearUsuario;
     private javax.swing.JMenuItem jMenuItemDeshaMenu;
     private javax.swing.JMenuItem jMenuItemElimRes;
     private javax.swing.JMenuItem jMenuItemEliminar;
+    private javax.swing.JMenuItem jMenuItemModClie;
     private javax.swing.JMenuItem jMenuItemModMen;
+    private javax.swing.JMenuItem jMenuItemModPre;
     private javax.swing.JMenuItem jMenuItemModificar;
     private javax.swing.JMenuItem jMenuItemRegAloj;
     private javax.swing.JMenuItem jMenuItemRegClie;
@@ -506,6 +633,7 @@ public class HotelDescktop extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemReportReser;
     private javax.swing.JMenuItem jMenuItemReporte;
     private javax.swing.JMenuItem jMenuItemSalir;
+    private javax.swing.JMenuItem jMenuItemTomarPed;
     private javax.swing.JMenu jMenuOpciones;
     private javax.swing.JMenu jMenuRecepcion;
     private javax.swing.JMenu jMenuRestaurante;

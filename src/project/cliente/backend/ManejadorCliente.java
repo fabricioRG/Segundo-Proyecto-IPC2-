@@ -49,4 +49,19 @@ public class ManejadorCliente {
         }
     }
     
+    public void updateCliente(Cliente cliente, String nombre, String apellido, String telefono) throws Exception{
+        if(nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty()){
+            throw new Exception("Hay datos sin llenar, intentelo de nuevo");
+        } else if(nombre.length() > 20 || apellido.length() > 20){
+            throw new Exception("Ha superado el maximo de caracteres validos (20)");
+        } else {
+            cliente.setNombre(nombre);
+            cliente.setApellido(apellido);
+            cliente.setTelefono(Integer.parseInt(telefono));
+            String accion = "UPDATE CLIENTE SET NOMBRE = ?, APELLIDO = ?, TELEFONO = ? WHERE DPI = ?";
+            this.DBMS.updateCliente(accion, cliente);
+            JOptionPane.showMessageDialog(null, "Se ha Modificado exitosamente el cliente'" + nombre + "'", "Accion exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
 }

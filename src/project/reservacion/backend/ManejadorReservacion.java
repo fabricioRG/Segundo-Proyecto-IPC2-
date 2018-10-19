@@ -9,7 +9,6 @@ import project.alojamiento.frontend.RegistradorAlojamiento;
 import project.baseDatos.ManejadorBaseDatos;
 import project.cliente.backend.ManejadorCliente;
 import project.cliente.frontend.CreadorCliente;
-import project.cliente.frontend.RegistradorCliente;
 
 /**
  *
@@ -52,6 +51,18 @@ public class ManejadorReservacion {
         String consulta = "SELECT * FROM RESERVACION WHERE FECHA_INICIO >= '" + fechaFormat.format(inicio) 
                 + "' AND FECHA_SALIDA <= '" + fechaFormat.format(salida) + "' AND ESTADO = '1'";
         return DBMS.getReservacion(consulta, 0, null);
+    }
+    
+    public List getReservacionesByDateEntradaSalidaAlojCliente(Date inicio, Date salida, String idCliente) {
+        String consulta = "SELECT * FROM RESERVACION WHERE FECHA_INICIO >= '" + fechaFormat.format(inicio) 
+                + "' AND FECHA_SALIDA <= '" + fechaFormat.format(salida) + "' AND ESTADO = '1' AND DPI_CLIENTE = ?";
+        return DBMS.getReservacion(consulta, 1, idCliente);
+    }
+    
+    public List getReservacionesByDateEntradaSalidaAlojHabitacion(Date inicio, Date salida, String noHabitacion) {
+        String consulta = "SELECT * FROM RESERVACION WHERE FECHA_INICIO >= '" + fechaFormat.format(inicio) 
+                + "' AND FECHA_SALIDA <= '" + fechaFormat.format(salida) + "' AND ESTADO = '1' AND NO_HABITACION = ?";
+        return DBMS.getReservacion(consulta, 1, noHabitacion);
     }
     
     public void setReservacion(String dpiCliente, int noHabitacion, Date fechaInicio, Date fechaSalida,

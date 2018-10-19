@@ -4,6 +4,7 @@ import hotelelbuendescanso.BaseDatos;
 import java.util.List;
 import javax.swing.JOptionPane;
 import project.baseDatos.ManejadorBaseDatos;
+import project.consumo.backend.Consumo;
 
 /**
  *
@@ -66,4 +67,16 @@ public class ManejadorMenu {
                     menu.getId() + "'", "Accion Exitosa", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public void setConsumo(int idMenu, int idReservacion, double monto){
+        Consumo consumo = new Consumo(0, idMenu, idReservacion, monto);
+        String accion = "INSERT INTO CONSUMO ( ID_MENU, ID_RESERVACION, MONTO ) VALUES ( ?, ?, ?)";
+        this.DBMS.setConsumo(accion, consumo);
+        JOptionPane.showMessageDialog(null, "Se ha registrado el consumo exitosamente" , "Accion Exitosa", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public List getMenuByIdReservacion(String id){
+        String consulta = "SELECT b.* FROM RESERVACION a, MENU b, CONSUMO c WHERE c.ID_RESERVACION = a.ID AND c.ID_MENU = b.ID AND a.ID = ?";
+        return this.DBMS.getMenu(consulta, 1, id);
+    }
+    
 }
