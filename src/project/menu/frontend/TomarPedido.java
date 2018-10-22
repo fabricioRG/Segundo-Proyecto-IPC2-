@@ -3,6 +3,7 @@ package project.menu.frontend;
 import hotelelbuendescanso.BaseDatos;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import project.menu.backend.ManejadorMenu;
@@ -18,7 +19,7 @@ public class TomarPedido extends javax.swing.JInternalFrame {
     private List<Menu> listaMenu = null;
     private ObservableList<Menu> listaMenuObser = null;
     private Menu elementoSelec = null;
-    
+
     /**
      * Creates new form CreadorUsuario
      */
@@ -72,7 +73,7 @@ public class TomarPedido extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(2, 161, 192));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setClosable(true);
-        setTitle("Reporte de Usuarios");
+        setTitle("Tomar pedido");
         setToolTipText("");
 
         jPanel1.setBackground(new java.awt.Color(2, 161, 192));
@@ -160,7 +161,7 @@ public class TomarPedido extends javax.swing.JInternalFrame {
         buttonRegistrar.setBackground(new java.awt.Color(246, 145, 1));
         buttonRegistrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonRegistrar.setForeground(new java.awt.Color(254, 254, 254));
-        buttonRegistrar.setText("REGISTRAR");
+        buttonRegistrar.setText("TOMAR PEDIDO");
         buttonRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonRegistrarActionPerformed(evt);
@@ -179,21 +180,12 @@ public class TomarPedido extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(107, 107, 107)
-                                .addComponent(buttonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(51, 51, 51)
-                                .addComponent(buttonFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(252, 252, 252)
                                 .addComponent(jLabel1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabelMontoPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,6 +194,16 @@ public class TomarPedido extends javax.swing.JInternalFrame {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 33, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(142, 142, 142)
+                .addComponent(buttonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(comboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,8 +262,11 @@ public class TomarPedido extends javax.swing.JInternalFrame {
         ManejadorMenu mm = new ManejadorMenu(DB);
         Alojamiento a = new Alojamiento(null, closable, DB);
         a.setVisible(true);
-        mm.setConsumo(elementoSelec.getId(), a.getReservSelec().getId(), elementoSelec.getPrecio());
-        actualizarLista();
+        if (a.getReservSelec() != null) {
+            mm.setConsumo(elementoSelec.getId(), a.getReservSelec().getId(), elementoSelec.getPrecio(), a.getFechaPedido());
+            actualizarLista();
+        }
+        buttonRegistrar.setEnabled(false);
     }//GEN-LAST:event_buttonRegistrarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -272,22 +277,22 @@ public class TomarPedido extends javax.swing.JInternalFrame {
     private void actualizarLista() {
         ManejadorMenu mm = new ManejadorMenu(DB);
         listaMenuObser.clear();
-        if(mm.getMenu() != null){
-            listaMenuObser.addAll(mm.getMenu());
+        if (mm.getMenus() != null) {
+            listaMenuObser.addAll(mm.getMenus());
         }
         buttonRegistrar.setEnabled(false);
     }
-    
-    private void filtrarLista(){
+
+    private void filtrarLista() {
         ManejadorMenu mm = new ManejadorMenu(DB);
         listaMenuObser.clear();
         String tipo = comboBoxTipo.getSelectedItem().toString();
-        if(mm.getMenuByTipo(tipo) != null){
+        if (mm.getMenuByTipo(tipo) != null) {
             listaMenuObser.addAll(mm.getMenuByTipo(tipo));
         }
         buttonRegistrar.setEnabled(false);
     }
-    
+
     public ObservableList<Menu> getListaMenuObser() {
         return listaMenuObser;
     }

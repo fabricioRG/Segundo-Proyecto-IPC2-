@@ -59,9 +59,19 @@ public class ManejadorReservacion {
         return DBMS.getReservacion(consulta, 1, idCliente);
     }
     
+    public List getReservacionesByDateEntradaSalidaAlojCliente(String idCliente) {
+        String consulta = "SELECT * FROM RESERVACION WHERE ESTADO = '1' AND DPI_CLIENTE = ?";
+        return DBMS.getReservacion(consulta, 1, idCliente);
+    }
+    
     public List getReservacionesByDateEntradaSalidaAlojHabitacion(Date inicio, Date salida, String noHabitacion) {
         String consulta = "SELECT * FROM RESERVACION WHERE FECHA_INICIO >= '" + fechaFormat.format(inicio) 
                 + "' AND FECHA_SALIDA <= '" + fechaFormat.format(salida) + "' AND ESTADO = '1' AND NO_HABITACION = ?";
+        return DBMS.getReservacion(consulta, 1, noHabitacion);
+    }
+    
+    public List getReservacionesByDateEntradaSalidaAlojHabitacion(String noHabitacion) {
+        String consulta = "SELECT * FROM RESERVACION WHERE ESTADO = '1' AND NO_HABITACION = ?";
         return DBMS.getReservacion(consulta, 1, noHabitacion);
     }
     

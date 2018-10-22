@@ -5,8 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
 import project.cliente.backend.Cliente;
@@ -362,6 +362,29 @@ public class ManejadorBaseDatos {
         return elementosMenu;
     }
 
+    public Menu getMenu(String consulta, int idMenu) {
+        Menu elemento = null;
+        try {
+            declaracion = connection.createStatement();
+            sentencia = connection.prepareStatement(consulta);
+            sentencia.setInt(1, idMenu);
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                int id = resultado.getInt("ID");
+                String nombre = resultado.getString("Nombre");
+                String descripcion = resultado.getString("Descripcion");
+                String tipo = resultado.getString("Tipo");
+                double precio = resultado.getDouble("Precio");
+                int estado = resultado.getInt("Estado");
+                elemento = new Menu(id, nombre, descripcion, tipo, precio, estado);
+            }
+            sentencia.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return elemento;
+    }
+
     public void updateMenu(String accion, Menu menu, int opcion) {
         try {
             declaracion = connection.createStatement();
@@ -381,18 +404,48 @@ public class ManejadorBaseDatos {
         }
     }
 
-    public void setConsumo(String accion, Consumo consumo){
+    public void setConsumo(String accion, Consumo consumo) {
         try {
             declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setInt(1, consumo.getIdMenu());
             sentencia.setInt(2, consumo.getIdReservacion());
             sentencia.setDouble(3, consumo.getMonto());
+            sentencia.setString(4, fechaFormat.format(consumo.getFecha()));
             sentencia.executeUpdate();
             sentencia.close();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
     }
-    
+
+    public List getConsumo(String consulta, String dato, int opcion) {
+        List<Consumo> listaConsumo = new LinkedList<>();
+        Consumo consumo = null;
+        try {
+            declaracion = connection.createStatement();
+            sentencia = connection.prepareStatement(consulta);
+            if (opcion == 1) {
+                sentencia.setString(1, dato);
+            }
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                int id = resultado.getInt("ID");
+                int idMenu = resultado.getInt("ID_Menu");
+                int idReservacion = resultado.getInt("ID_Reservacion");
+                double monto = resultado.getDouble("Monto");
+                String fecha = resultado.getString("Fecha");
+                Date date = fechaFormat.parse(fecha);
+                consumo = new Consumo(id, idMenu, idReservacion, monto, date);
+                listaConsumo.add(consumo);
+            }
+            sentencia.close();
+            if (listaConsumo.isEmpty()) {
+                listaConsumo = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return listaConsumo;
+    }
 }

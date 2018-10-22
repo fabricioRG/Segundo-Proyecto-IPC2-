@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
+import project.cliente.backend.Cliente;
+import project.cliente.backend.ManejadorCliente;
 import project.menu.backend.ManejadorMenu;
 import project.menu.backend.Menu;
 import project.reservacion.backend.ManejadorReservacion;
@@ -22,19 +24,22 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
     private Usuario usuario = null;
     private List<Reservacion> listaReser = null;
     private List<Menu> listaMenu = null;
+    private List<Cliente> listaClientes = null;
     private ObservableList<Reservacion> listaReserObser = null;
     private ObservableList<Menu> listaMenuObser = null;
     private Reservacion reservSelec = null;
-    
+
     public ReporteAlojamientosCliente(BaseDatos DB, Usuario usr) {
         this.DB = DB;
         this.usuario = usr;
         this.listaReser = new LinkedList<>();
         this.listaMenu = new LinkedList<>();
+        this.listaClientes = new LinkedList<>();
         this.listaReserObser = ObservableCollections.observableList(listaReser);
         this.listaMenuObser = ObservableCollections.observableList(listaMenu);
         initComponents();
         actualizarListaAlojamientos();
+        actualizarListaDPI();
     }
 
     /**
@@ -64,8 +69,7 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabelAlojamientos = new javax.swing.JLabel();
         jLabelConsumos = new javax.swing.JLabel();
-        formattedTextFieldDPI = new javax.swing.JFormattedTextField();
-        jLabel8 = new javax.swing.JLabel();
+        jComboBoxDPI = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 99, 71));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -182,19 +186,6 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
         jLabelConsumos.setForeground(new java.awt.Color(254, 254, 254));
         jLabelConsumos.setText(" ");
 
-        formattedTextFieldDPI.setBackground(new java.awt.Color(254, 254, 254));
-        formattedTextFieldDPI.setBorder(javax.swing.BorderFactory.createEmptyBorder(7, 7, 7, 7));
-        formattedTextFieldDPI.setForeground(new java.awt.Color(237, 71, 71));
-        try {
-            formattedTextFieldDPI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        formattedTextFieldDPI.setCaretColor(new java.awt.Color(237, 71, 71));
-
-        jLabel8.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel8.setText("DPI*:");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -209,10 +200,6 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jDateChooserInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(formattedTextFieldDPI, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -222,19 +209,22 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 44, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelAlojamientos, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(91, 91, 91)
-                        .addComponent(buttonFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jComboBoxDPI, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(96, 96, 96)
                             .addComponent(jLabel5)
                             .addGap(18, 18, 18)
                             .addComponent(jDateChooserSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabelAlojamientos, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(91, 91, 91)
+                            .addComponent(buttonFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(296, 296, 296)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
@@ -258,10 +248,8 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
                     .addComponent(jDateChooserInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDateChooserSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(formattedTextFieldDPI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8)))
-                .addGap(24, 24, 24)
+                    .addComponent(jComboBoxDPI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabelAlojamientos)
@@ -299,22 +287,24 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
 
     private void buttonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActualizarActionPerformed
         actualizarListaAlojamientos();
+        actualizarListaDPI();
     }//GEN-LAST:event_buttonActualizarActionPerformed
 
     private void buttonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFiltrarActionPerformed
+        ManejadorReservacion mr = new ManejadorReservacion(DB);
         if (jDateChooserInicio.getDate() == null || jDateChooserSalida.getDate() == null) {
-            JOptionPane.showMessageDialog(rootPane, "No es posible filtrar las reservaciones, intentelo de nuevo", "Error", JOptionPane.ERROR_MESSAGE);
+            listaReserObser.clear();
+            if (mr.getReservacionesByDateEntradaSalidaAlojCliente(jComboBoxDPI.getSelectedItem().toString()) != null) {
+                listaReserObser.addAll(mr.getReservacionesByDateEntradaSalidaAlojCliente(jComboBoxDPI.getSelectedItem().toString()));
+            }
         } else if (jDateChooserInicio.getDate().compareTo(jDateChooserSalida.getDate()) >= 0) {
             JOptionPane.showMessageDialog(rootPane, "Fechas incorrectas, intentelo de nuevo", "error", JOptionPane.ERROR_MESSAGE);
-        } else if(formattedTextFieldDPI.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "DPI vacio", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            ManejadorReservacion mr = new ManejadorReservacion(DB);
             listaReserObser.clear();
-            if (mr.getReservacionesByDateEntradaSalidaAlojCliente(jDateChooserInicio.getDate(), jDateChooserSalida.getDate(), 
-                    formattedTextFieldDPI.getText()) != null) {
-                listaReserObser.addAll(mr.getReservacionesByDateEntradaSalidaAlojCliente(jDateChooserInicio.getDate(), 
-                        jDateChooserSalida.getDate(),  formattedTextFieldDPI.getText()));
+            if (mr.getReservacionesByDateEntradaSalidaAlojCliente(jDateChooserInicio.getDate(), jDateChooserSalida.getDate(),
+                    jComboBoxDPI.getSelectedItem().toString()) != null) {
+                listaReserObser.addAll(mr.getReservacionesByDateEntradaSalidaAlojCliente(jDateChooserInicio.getDate(),
+                        jDateChooserSalida.getDate(), jComboBoxDPI.getSelectedItem().toString()));
                 jLabelAlojamientos.setText(Integer.toString(listaReserObser.size()));
             } else {
                 jLabelAlojamientos.setText("");
@@ -330,7 +320,7 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
     private void actualizarListaAlojamientos() {
         ManejadorReservacion mr = new ManejadorReservacion(DB);
         listaReserObser.clear();
-        if (mr.getAlojamientos()!= null) {
+        if (mr.getAlojamientos() != null) {
             listaReserObser.addAll(mr.getAlojamientos());
             jLabelAlojamientos.setText(Integer.toString(listaReserObser.size()));
         } else {
@@ -338,17 +328,30 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
         }
     }
 
-    private void actualizarListaConsumos(){
+    private void actualizarListaConsumos() {
         ManejadorMenu mm = new ManejadorMenu(DB);
         listaMenuObser.clear();
-        if(mm.getMenuByIdReservacion(Integer.toString(reservSelec.getId())) != null){
+        if (mm.getMenuByIdReservacion(Integer.toString(reservSelec.getId())) != null) {
             listaMenuObser.addAll(mm.getMenuByIdReservacion(Integer.toString(reservSelec.getId())));
             jLabelConsumos.setText(Integer.toString(listaMenuObser.size()));
         } else {
             jLabelConsumos.setText("");
         }
     }
-    
+
+    private void actualizarListaDPI() {
+        ManejadorCliente mc = new ManejadorCliente(DB);
+        jComboBoxDPI.removeAll();
+        listaClientes.clear();
+        if (mc.getClientes() != null) {
+            listaClientes.addAll(mc.getClientes());
+            for (Cliente cliente : listaClientes) {
+                jComboBoxDPI.addItem(Integer.toString(cliente.getDpi()));
+            }
+        }
+
+    }
+
     public ObservableList<Reservacion> getListaReserObser() {
         return listaReserObser;
     }
@@ -376,7 +379,7 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonActualizar;
     private javax.swing.JButton buttonFiltrar;
-    private javax.swing.JFormattedTextField formattedTextFieldDPI;
+    private javax.swing.JComboBox<String> jComboBoxDPI;
     private com.toedter.calendar.JDateChooser jDateChooserInicio;
     private com.toedter.calendar.JDateChooser jDateChooserSalida;
     private javax.swing.JLabel jLabel1;
@@ -384,7 +387,6 @@ public class ReporteAlojamientosCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelAlojamientos;
     private javax.swing.JLabel jLabelConsumos;
     private javax.swing.JPanel jPanel1;

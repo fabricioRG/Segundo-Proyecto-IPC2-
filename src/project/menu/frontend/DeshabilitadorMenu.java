@@ -270,8 +270,8 @@ public class DeshabilitadorMenu extends javax.swing.JInternalFrame {
 
     private void actualizarLista() {
         listaMenuObser.clear();
-        if (mm.getMenu() != null) {
-            listaMenuObser.addAll(mm.getMenu());
+        if (mm.getMenus() != null) {
+            listaMenuObser.addAll(mm.getMenus());
         }
         deshabilitarBotons();
     }

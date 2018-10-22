@@ -217,8 +217,8 @@ public class ReporteMenu extends javax.swing.JInternalFrame {
     private void actualizarLista() {
         ManejadorMenu mm = new ManejadorMenu(DB);
         listaMenuObser.clear();
-        if(mm.getMenu() != null){
-            listaMenuObser.addAll(mm.getMenu());
+        if(mm.getMenus() != null){
+            listaMenuObser.addAll(mm.getMenus());
         }
     }
     

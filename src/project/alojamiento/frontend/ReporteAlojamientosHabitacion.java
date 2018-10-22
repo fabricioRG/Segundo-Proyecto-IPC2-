@@ -25,7 +25,7 @@ public class ReporteAlojamientosHabitacion extends javax.swing.JInternalFrame {
     private ObservableList<Reservacion> listaReserObser = null;
     private ObservableList<Menu> listaMenuObser = null;
     private Reservacion reservSelec = null;
-    
+
     public ReporteAlojamientosHabitacion(BaseDatos DB, Usuario usr) {
         this.DB = DB;
         this.usuario = usr;
@@ -100,7 +100,7 @@ public class ReporteAlojamientosHabitacion extends javax.swing.JInternalFrame {
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${listaReserObser}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
-        columnBinding.setColumnName("ID Reservacion");
+        columnBinding.setColumnName("ID");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dpiCliente}"));
@@ -118,6 +118,10 @@ public class ReporteAlojamientosHabitacion extends javax.swing.JInternalFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${monto}"));
         columnBinding.setColumnName("Monto");
         columnBinding.setColumnClass(Double.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noHabitacion}"));
+        columnBinding.setColumnName("No Habitacion");
+        columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${reservSelec}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
@@ -297,17 +301,20 @@ public class ReporteAlojamientosHabitacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttonActualizarActionPerformed
 
     private void buttonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFiltrarActionPerformed
+        ManejadorReservacion mr = new ManejadorReservacion(DB);
         if (jDateChooserInicio.getDate() == null || jDateChooserSalida.getDate() == null) {
-            JOptionPane.showMessageDialog(rootPane, "No es posible filtrar las reservaciones, intentelo de nuevo", "Error", JOptionPane.ERROR_MESSAGE);
+            listaReserObser.clear();
+            if (mr.getReservacionesByDateEntradaSalidaAlojHabitacion(jComboBox1.getSelectedItem().toString()) != null) {
+                listaReserObser.addAll(mr.getReservacionesByDateEntradaSalidaAlojHabitacion(jComboBox1.getSelectedItem().toString()));
+            }
         } else if (jDateChooserInicio.getDate().compareTo(jDateChooserSalida.getDate()) >= 0) {
             JOptionPane.showMessageDialog(rootPane, "Fechas incorrectas, intentelo de nuevo", "error", JOptionPane.ERROR_MESSAGE);
         } else {
-            ManejadorReservacion mr = new ManejadorReservacion(DB);
             listaReserObser.clear();
-            if (mr.getReservacionesByDateEntradaSalidaAlojCliente(jDateChooserInicio.getDate(), jDateChooserSalida.getDate(), 
+            if (mr.getReservacionesByDateEntradaSalidaAlojHabitacion(jDateChooserInicio.getDate(), jDateChooserSalida.getDate(),
                     jComboBox1.getSelectedItem().toString()) != null) {
-                listaReserObser.addAll(mr.getReservacionesByDateEntradaSalidaAlojCliente(jDateChooserInicio.getDate(), 
-                        jDateChooserSalida.getDate(),  jComboBox1.getSelectedItem().toString()));
+                listaReserObser.addAll(mr.getReservacionesByDateEntradaSalidaAlojHabitacion(jDateChooserInicio.getDate(),
+                        jDateChooserSalida.getDate(), jComboBox1.getSelectedItem().toString()));
                 jLabelAlojamientos.setText(Integer.toString(listaReserObser.size()));
             } else {
                 jLabelAlojamientos.setText("");
@@ -323,7 +330,7 @@ public class ReporteAlojamientosHabitacion extends javax.swing.JInternalFrame {
     private void actualizarListaAlojamientos() {
         ManejadorReservacion mr = new ManejadorReservacion(DB);
         listaReserObser.clear();
-        if (mr.getAlojamientos()!= null) {
+        if (mr.getAlojamientos() != null) {
             listaReserObser.addAll(mr.getAlojamientos());
             jLabelAlojamientos.setText(Integer.toString(listaReserObser.size()));
         } else {
@@ -331,17 +338,17 @@ public class ReporteAlojamientosHabitacion extends javax.swing.JInternalFrame {
         }
     }
 
-    private void actualizarListaConsumos(){
+    private void actualizarListaConsumos() {
         ManejadorMenu mm = new ManejadorMenu(DB);
         listaMenuObser.clear();
-        if(mm.getMenuByIdReservacion(Integer.toString(reservSelec.getId())) != null){
+        if (mm.getMenuByIdReservacion(Integer.toString(reservSelec.getId())) != null) {
             listaMenuObser.addAll(mm.getMenuByIdReservacion(Integer.toString(reservSelec.getId())));
             jLabelConsumos.setText(Integer.toString(listaMenuObser.size()));
         } else {
             jLabelConsumos.setText("");
         }
     }
-    
+
     public ObservableList<Reservacion> getListaReserObser() {
         return listaReserObser;
     }

@@ -1,6 +1,7 @@
 package project.menu.frontend;
 
 import hotelelbuendescanso.BaseDatos;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,6 +22,8 @@ public class Alojamiento extends javax.swing.JDialog {
     private List<Reservacion> listaReser = null;
     private ObservableList<Reservacion> listaReserObser = null;
     private Reservacion reservSelec = null;
+    private Date fechaPedido = null;
+
     /**
      * Creates new form Alojamientos
      */
@@ -57,6 +60,10 @@ public class Alojamiento extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         buttonFiltrar = new javax.swing.JButton();
         buttonSeleccionar = new javax.swing.JButton();
+        buttonCancelar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jDateChooserFecha = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -134,6 +141,22 @@ public class Alojamiento extends javax.swing.JDialog {
             }
         });
 
+        buttonCancelar.setBackground(new java.awt.Color(70, 130, 180));
+        buttonCancelar.setFont(new java.awt.Font("Caviar Dreams", 0, 14)); // NOI18N
+        buttonCancelar.setForeground(new java.awt.Color(254, 254, 254));
+        buttonCancelar.setText("Cancelar");
+        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel7.setText("Fecha pedido:");
+
+        jLabel8.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel8.setText("Fecha pedido:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -170,9 +193,20 @@ public class Alojamiento extends javax.swing.JDialog {
                         .addGap(317, 317, 317)
                         .addComponent(buttonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(309, 309, 309)
-                        .addComponent(buttonSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(220, 220, 220)
+                        .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateChooserFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(46, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(333, 333, 333)
+                    .addComponent(jLabel7)
+                    .addContainerGap(465, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,8 +228,18 @@ public class Alojamiento extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(jDateChooserFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(273, 273, 273)
+                    .addComponent(jLabel7)
+                    .addContainerGap(286, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -236,20 +280,47 @@ public class Alojamiento extends javax.swing.JDialog {
     }//GEN-LAST:event_buttonFiltrarActionPerformed
 
     private void buttonSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSeleccionarActionPerformed
-        this.dispose();
+        try {
+            verificarFecha();
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            buttonSeleccionar.setEnabled(false);
+        }
     }//GEN-LAST:event_buttonSeleccionarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         buttonSeleccionar.setEnabled(true);
+        jDateChooserFecha.setDate(reservSelec.getFechaInicio());
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
+        reservSelec = null;
+        fechaPedido = null;
+        this.dispose();
+    }//GEN-LAST:event_buttonCancelarActionPerformed
 
     private void actualizarLista() {
         ManejadorReservacion mr = new ManejadorReservacion(DB);
         listaReserObser.clear();
-        if (mr.getAlojamientos()!= null) {
+        if (mr.getAlojamientos() != null) {
             listaReserObser.addAll(mr.getAlojamientos());
         }
         buttonSeleccionar.setEnabled(false);
+    }
+
+    private void verificarFecha() throws Exception {
+        if (jDateChooserFecha.getDate() != null) {
+            if (jDateChooserFecha.getDate().compareTo(reservSelec.getFechaSalida()) >= 0) {
+                throw new Exception("Fecha mayor a la fecha de salida, intentelo de nuevo");
+            } else if (jDateChooserFecha.getDate().compareTo(reservSelec.getFechaInicio()) < 0) {
+                throw new Exception("Fecha menor a la fecha de inicio, intentelo de nuevo");
+            } else {
+                fechaPedido = jDateChooserFecha.getDate();
+            }
+        } else {
+            fechaPedido = reservSelec.getFechaInicio();
+        }
     }
 
     public ObservableList<Reservacion> getListaReserObser() {
@@ -268,15 +339,27 @@ public class Alojamiento extends javax.swing.JDialog {
         this.reservSelec = reservSelec;
     }
 
+    public Date getFechaPedido() {
+        return fechaPedido;
+    }
+
+    public void setFechaPedido(Date fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonActualizar;
+    private javax.swing.JButton buttonCancelar;
     private javax.swing.JButton buttonFiltrar;
     private javax.swing.JButton buttonSeleccionar;
+    private com.toedter.calendar.JDateChooser jDateChooserFecha;
     private com.toedter.calendar.JDateChooser jDateChooserInicio;
     private com.toedter.calendar.JDateChooser jDateChooserSalida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
