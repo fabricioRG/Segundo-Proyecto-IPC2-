@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/reservacion/frontend/RegistradorReservacion.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/baseDatos/ManejadorBaseDatos.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/menu/backend/ManejadorMenu.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/frontend/HotelDescktop.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/alojamiento/frontend/ReporteAlojamientos.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/menu/frontend/Alojamiento.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/reservacion/backend/ManejadorReservacion.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/cliente/backend/ManejadorCliente.java</file>
-            <file>file:/home/fabricio/NetBeansProjects/HotelElBuenDescanso/src/project/habitacion/backend/ManejadorHabitacion.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
