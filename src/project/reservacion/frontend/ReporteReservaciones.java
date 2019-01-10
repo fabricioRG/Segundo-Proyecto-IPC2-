@@ -3,6 +3,9 @@ package project.reservacion.frontend;
 import hotelelbuendescanso.BaseDatos;
 import java.text.ParseException;
 import java.time.format.DateTimeParseException;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -22,12 +25,15 @@ public class ReporteReservaciones extends javax.swing.JInternalFrame {
     private Usuario usuario = null;
     private List<Reservacion> listaReser = null;
     private ObservableList<Reservacion> listaReserObser = null;
+    public String path;
+    private final static String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH = "src/project/frontend/images/blur2.jpg";
 
     public ReporteReservaciones(BaseDatos DB, Usuario usr) {
         this.DB = DB;
         this.usuario = usr;
         this.listaReser = new LinkedList<>();
         this.listaReserObser = ObservableCollections.observableList(listaReser);
+        this.path = BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH;
         initComponents();
         actualizarLista();
     }
@@ -42,7 +48,13 @@ public class ReporteReservaciones extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel(){
+            public void paintComponent(Graphics g){
+                ImageIcon im = new ImageIcon(path);
+                Image i = im.getImage();
+                g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);
+            }
+        };
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();

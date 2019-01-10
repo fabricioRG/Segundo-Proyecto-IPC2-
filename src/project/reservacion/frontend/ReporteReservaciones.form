@@ -49,6 +49,9 @@
           <Color blue="47" green="63" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel(){&#xa;    public void paintComponent(Graphics g){&#xa;        ImageIcon im = new ImageIcon(path);&#xa;        Image i = im.getImage();&#xa;        g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);&#xa;    }&#xa;}"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">

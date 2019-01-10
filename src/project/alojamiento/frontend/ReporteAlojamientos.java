@@ -3,6 +3,9 @@ package project.alojamiento.frontend;
 import hotelelbuendescanso.BaseDatos;
 import java.util.LinkedList;
 import java.util.List;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
@@ -25,6 +28,8 @@ public class ReporteAlojamientos extends javax.swing.JInternalFrame {
     private ObservableList<Reservacion> listaReserObser = null;
     private ObservableList<Menu> listaMenuObser = null;
     private Reservacion reservSelec = null;
+    public String path;
+    private final static String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH = "src/project/frontend/images/blur2.jpg";
     
     public ReporteAlojamientos(BaseDatos DB, Usuario usr) {
         this.DB = DB;
@@ -33,6 +38,7 @@ public class ReporteAlojamientos extends javax.swing.JInternalFrame {
         this.listaMenu = new LinkedList<>();
         this.listaReserObser = ObservableCollections.observableList(listaReser);
         this.listaMenuObser = ObservableCollections.observableList(listaMenu);
+        this.path = BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH;
         initComponents();
         actualizarListaAlojamientos();
     }
@@ -47,7 +53,13 @@ public class ReporteAlojamientos extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel(){
+            public void paintComponent(Graphics g){
+                ImageIcon im = new ImageIcon(path);
+                Image i = im.getImage();
+                g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);
+            }
+        };
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();

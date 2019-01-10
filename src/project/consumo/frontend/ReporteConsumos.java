@@ -1,7 +1,10 @@
 package project.consumo.frontend;
 
 import hotelelbuendescanso.BaseDatos;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.LinkedList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
@@ -21,6 +24,8 @@ public class ReporteConsumos extends javax.swing.JInternalFrame {
     private Consumo consumoSelec = null;
     private Menu menu = null;
     private ManejadorMenu mm = null;
+    public String path;
+    private final static String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH = "src/project/frontend/images/blur3.jpg";
 
     /**
      * Creates new form ReporteConsumos
@@ -30,6 +35,7 @@ public class ReporteConsumos extends javax.swing.JInternalFrame {
         this.listaConsumos = new LinkedList<>();
         this.listaConsumoObser = ObservableCollections.observableList(listaConsumos);
         this.mm = new ManejadorMenu(DB);
+        this.path = BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH;
         initComponents();
         actualizarListaConsumos();
     }
@@ -44,7 +50,13 @@ public class ReporteConsumos extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel(){
+            public void paintComponent(Graphics g){
+                ImageIcon im = new ImageIcon(path);
+                Image i = im.getImage();
+                g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);
+            }
+        };
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();

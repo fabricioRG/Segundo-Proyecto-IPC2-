@@ -1,9 +1,11 @@
 package project.menu.frontend;
 
 import hotelelbuendescanso.BaseDatos;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import project.menu.backend.ManejadorMenu;
@@ -19,6 +21,8 @@ public class TomarPedido extends javax.swing.JInternalFrame {
     private List<Menu> listaMenu = null;
     private ObservableList<Menu> listaMenuObser = null;
     private Menu elementoSelec = null;
+    public String path;
+    private final static String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH = "src/project/frontend/images/blur3.jpg";
 
     /**
      * Creates new form CreadorUsuario
@@ -27,6 +31,7 @@ public class TomarPedido extends javax.swing.JInternalFrame {
         this.listaMenu = new LinkedList<>();
         this.listaMenuObser = ObservableCollections.observableList(listaMenu);
         this.DB = DB;
+        this.path = BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH;
         initComponents();
         actualizarLista();
     }
@@ -44,7 +49,15 @@ public class TomarPedido extends javax.swing.JInternalFrame {
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel(){
+
+            public void paintComponent(Graphics g){
+                ImageIcon im = new ImageIcon(path);
+                Image i = im.getImage();
+                g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);
+            }
+
+        };
         comboBoxTipo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -70,7 +83,7 @@ public class TomarPedido extends javax.swing.JInternalFrame {
         jLabel10.setForeground(new java.awt.Color(54, 209, 238));
         jLabel10.setText("Max: 20");
 
-        setBackground(new java.awt.Color(2, 161, 192));
+        setBackground(new java.awt.Color(254, 254, 254));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setClosable(true);
         setTitle("Tomar pedido");
@@ -78,8 +91,8 @@ public class TomarPedido extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(2, 161, 192));
 
-        comboBoxTipo.setBackground(new java.awt.Color(2, 124, 139));
-        comboBoxTipo.setForeground(new java.awt.Color(254, 254, 254));
+        comboBoxTipo.setBackground(new java.awt.Color(254, 254, 254));
+        comboBoxTipo.setForeground(new java.awt.Color(20, 17, 107));
         comboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comida", "Bebida" }));
         comboBoxTipo.setToolTipText("Seleccione una opcion");
 

@@ -1,36 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package project.frontend;
 
 import hotelelbuendescanso.BaseDatos;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
-import project.menu.frontend.DeshabilitadorMenu;
-import project.menu.frontend.ModificadorMenu;
-import project.alojamiento.frontend.RegistradorAlojamiento;
-import project.alojamiento.frontend.ReporteAlojamientos;
-import project.alojamiento.frontend.ReporteAlojamientosCliente;
-import project.alojamiento.frontend.ReporteAlojamientosHabitacion;
-import project.cliente.frontend.ModificadorCliente;
-import project.menu.frontend.ReporteMenu;
-import project.cliente.frontend.RegistradorCliente;
-import project.cliente.frontend.ReporteClientes;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import project.alojamiento.frontend.*;
+import project.cliente.frontend.*;
+import project.menu.frontend.*;
 import project.consumo.frontend.ReporteConsumos;
 import project.habitacion.frontend.ModificadorPrecio;
-import project.menu.frontend.CreadorMenu;
-import project.menu.frontend.TomarPedido;
-import project.reservacion.frontend.CanceladorReservacion;
-import project.reservacion.frontend.RegistradorReservacion;
-import project.reservacion.frontend.ReporteReservaciones;
+import project.reservacion.frontend.*;
 import project.usuario.Usuario;
-import project.usuario.frontend.CreadorUsuario;
-import project.usuario.frontend.EliminadorUsuario;
-import project.usuario.frontend.ModificadorUsuario;
-import project.usuario.frontend.ReporteUsuarios;
-import project.usuario.frontend.SolicitadorUsuario;
+import project.usuario.frontend.*;
 
 /**
  *
@@ -40,16 +24,24 @@ public class HotelDescktop extends javax.swing.JFrame {
 
     private BaseDatos DB = null;
     private Usuario usuario = null;
+    public static final String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH = "src/project/frontend/images/";
+    public static final String IMAGE_EXTENSION = ".jpg";
+    public String path = " ";
+    public String path1 = " ";
+    private String tipoUsuario = " ";
+
+    
 
     /**
      * Creates new form HotelDescktop
      */
     public HotelDescktop(Usuario usr, BaseDatos DB) {
         this.usuario = usr;
-        this.DB = DB;
+        this.DB = DB;        
+        setItems();
         initComponents();
         this.setLocationRelativeTo(this);
-        modificarItems();
+        visualizarItems();
     }
 
     /**
@@ -62,9 +54,22 @@ public class HotelDescktop extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
-        PrincipalDesktop = new javax.swing.JDesktopPane();
+        jPanelBackground = new javax.swing.JPanel(){
+            public void paintComponent(Graphics g){
+                ImageIcon im = new ImageIcon(path);
+                Image i = im.getImage();
+                g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);
+            }
+        };
+        PrincipalDesktop = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                ImageIcon im = new ImageIcon(path1);
+                Image i = im.getImage();
+                g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);
+            }
+        };
         labelInformacion = new javax.swing.JLabel();
+        jLabelUsuario = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         jMenuGerente = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
@@ -108,28 +113,43 @@ public class HotelDescktop extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        labelInformacion.setBackground(new java.awt.Color(254, 254, 254));
-        labelInformacion.setFont(new java.awt.Font("Caviar Dreams", 1, 14)); // NOI18N
+        jPanelBackground.setPreferredSize(new java.awt.Dimension(1280, 720));
+
+        labelInformacion.setFont(new java.awt.Font("Caviar Dreams", 1, 36)); // NOI18N
+        labelInformacion.setForeground(new java.awt.Color(254, 254, 254));
+        labelInformacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelInformacion.setText(" ");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(552, Short.MAX_VALUE))
-            .addComponent(PrincipalDesktop)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(labelInformacion)
+        jLabelUsuario.setFont(new java.awt.Font("Caviar Dreams", 1, 18)); // NOI18N
+        jLabelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelUsuario.setText(" ");
+
+        javax.swing.GroupLayout jPanelBackgroundLayout = new javax.swing.GroupLayout(jPanelBackground);
+        jPanelBackground.setLayout(jPanelBackgroundLayout);
+        jPanelBackgroundLayout.setHorizontalGroup(
+            jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PrincipalDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, 1154, Short.MAX_VALUE)
+            .addGroup(jPanelBackgroundLayout.createSequentialGroup()
+                .addGap(389, 389, 389)
+                .addComponent(labelInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PrincipalDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
+                .addComponent(jLabelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+        jPanelBackgroundLayout.setVerticalGroup(
+            jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBackgroundLayout.createSequentialGroup()
+                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0)
+                .addComponent(PrincipalDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+
+        menuBar.setBackground(new java.awt.Color(254, 254, 254));
 
         jMenuGerente.setText("Gerente");
         jMenuGerente.setVisible(false);
@@ -384,11 +404,11 @@ public class HotelDescktop extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, 1154, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
         );
 
         pack();
@@ -406,223 +426,167 @@ public class HotelDescktop extends javax.swing.JFrame {
 
     private void jMenuItemCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCrearUsuarioActionPerformed
         CreadorUsuario cu = new CreadorUsuario(this.DB);
-        PrincipalDesktop.add(cu);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = cu.getSize();
-        cu.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        cu.show();
+        añadirComponente(cu);
     }//GEN-LAST:event_jMenuItemCrearUsuarioActionPerformed
 
     private void jMenuItemReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReporteActionPerformed
         ReporteUsuarios ru = new ReporteUsuarios(this.DB);
-        PrincipalDesktop.add(ru);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = ru.getSize();
-        ru.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        ru.show();
+        añadirComponente(ru);
     }//GEN-LAST:event_jMenuItemReporteActionPerformed
 
     private void jMenuItemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarActionPerformed
         ModificadorUsuario mu = new ModificadorUsuario(DB);
-        PrincipalDesktop.add(mu);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = mu.getSize();
-        mu.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        mu.show();
+        añadirComponente(mu);
     }//GEN-LAST:event_jMenuItemModificarActionPerformed
 
     private void jMenuItemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarActionPerformed
         EliminadorUsuario eu = new EliminadorUsuario(DB);
-        PrincipalDesktop.add(eu);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = eu.getSize();
-        eu.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        eu.show();
+        añadirComponente(eu);
     }//GEN-LAST:event_jMenuItemEliminarActionPerformed
 
     private void jMenuItemRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarActionPerformed
         RegistradorReservacion rr = new RegistradorReservacion(DB, usuario);
-        PrincipalDesktop.add(rr);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = rr.getSize();
-        rr.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        rr.show();
+        añadirComponente(rr);
     }//GEN-LAST:event_jMenuItemRegistrarActionPerformed
 
     private void jMenuItemReportReserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReportReserActionPerformed
         ReporteReservaciones rr = new ReporteReservaciones(DB, usuario);
-        PrincipalDesktop.add(rr);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = rr.getSize();
-        rr.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        rr.show();
+        añadirComponente(rr);
     }//GEN-LAST:event_jMenuItemReportReserActionPerformed
 
     private void jMenuItemElimResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemElimResActionPerformed
         CanceladorReservacion cr = new CanceladorReservacion(DB, usuario);
-        PrincipalDesktop.add(cr);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = cr.getSize();
-        cr.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        cr.show();
+        añadirComponente(cr);
     }//GEN-LAST:event_jMenuItemElimResActionPerformed
 
     private void jMenuItemRegAlojActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegAlojActionPerformed
         RegistradorAlojamiento ra = new RegistradorAlojamiento(DB, usuario);
-        PrincipalDesktop.add(ra);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = ra.getSize();
-        ra.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        ra.show();
+        añadirComponente(ra);
     }//GEN-LAST:event_jMenuItemRegAlojActionPerformed
 
     private void jMenuItemRepClieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRepClieActionPerformed
         ReporteClientes rc = new ReporteClientes(DB, usuario);
-        PrincipalDesktop.add(rc);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = rc.getSize();
-        rc.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        rc.show();
+        añadirComponente(rc);
     }//GEN-LAST:event_jMenuItemRepClieActionPerformed
 
     private void jMenuItemRegClieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegClieActionPerformed
         RegistradorCliente rc = new RegistradorCliente(DB, usuario);
-        PrincipalDesktop.add(rc);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = rc.getSize();
-        rc.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        rc.show();
+        añadirComponente(rc);
     }//GEN-LAST:event_jMenuItemRegClieActionPerformed
 
     private void jMenuItemCrearMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCrearMenuActionPerformed
         CreadorMenu cm = new CreadorMenu(DB);
-        PrincipalDesktop.add(cm);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = cm.getSize();
-        cm.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        cm.show();
+        añadirComponente(cm);
     }//GEN-LAST:event_jMenuItemCrearMenuActionPerformed
 
     private void jMenuItemRepMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRepMenuActionPerformed
         ReporteMenu rm = new ReporteMenu(DB);
-        PrincipalDesktop.add(rm);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = rm.getSize();
-        rm.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        rm.show();
+        añadirComponente(rm);
     }//GEN-LAST:event_jMenuItemRepMenuActionPerformed
 
     private void jMenuItemModMenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModMenActionPerformed
         ModificadorMenu mm = new ModificadorMenu(DB);
-        PrincipalDesktop.add(mm);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = mm.getSize();
-        mm.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        mm.show();
+        añadirComponente(mm);
     }//GEN-LAST:event_jMenuItemModMenActionPerformed
 
     private void jMenuItemDeshaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeshaMenuActionPerformed
         DeshabilitadorMenu dm = new DeshabilitadorMenu(DB);
-        PrincipalDesktop.add(dm);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = dm.getSize();
-        dm.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        dm.show();
+        añadirComponente(dm);
     }//GEN-LAST:event_jMenuItemDeshaMenuActionPerformed
 
     private void jMenuItemRepAlojActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRepAlojActionPerformed
         ReporteAlojamientos ra = new ReporteAlojamientos(DB, usuario);
-        PrincipalDesktop.add(ra);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = ra.getSize();
-        ra.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        ra.show();
+        añadirComponente(ra);
     }//GEN-LAST:event_jMenuItemRepAlojActionPerformed
 
     private void jMenuItemModClieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModClieActionPerformed
         ModificadorCliente mc = new ModificadorCliente(DB, usuario);
-        PrincipalDesktop.add(mc);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = mc.getSize();
-        mc.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        mc.show();
+        añadirComponente(mc);
     }//GEN-LAST:event_jMenuItemModClieActionPerformed
 
     private void jMenuItemModPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModPreActionPerformed
         ModificadorPrecio mp = new ModificadorPrecio(DB, usuario);
-        PrincipalDesktop.add(mp);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = mp.getSize();
-        mp.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        mp.show();
+        añadirComponente(mp);
     }//GEN-LAST:event_jMenuItemModPreActionPerformed
 
     private void jMenuItemTomarPedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTomarPedActionPerformed
         TomarPedido tp = new TomarPedido(DB);
-        PrincipalDesktop.add(tp);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = tp.getSize();
-        tp.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        tp.show();
+        añadirComponente(tp);
     }//GEN-LAST:event_jMenuItemTomarPedActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         ReporteAlojamientosCliente rac = new ReporteAlojamientosCliente(DB, usuario);
-        PrincipalDesktop.add(rac);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = rac.getSize();
-        rac.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        rac.show();
+        añadirComponente(rac);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItemAlojHabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAlojHabActionPerformed
         ReporteAlojamientosHabitacion rah = new ReporteAlojamientosHabitacion(DB, usuario);
-        PrincipalDesktop.add(rah);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = rah.getSize();
-        rah.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        rah.show();
+        añadirComponente(rah);
     }//GEN-LAST:event_jMenuItemAlojHabActionPerformed
 
     private void jMenuItemReporConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReporConActionPerformed
         ReporteConsumos rc = new ReporteConsumos(DB);
-        PrincipalDesktop.add(rc);
-        Dimension desktopSize = PrincipalDesktop.getSize();
-        Dimension FrameSize = rc.getSize();
-        rc.setLocation((desktopSize.width - FrameSize.width) / 2, 0);
-        rc.show();
+        añadirComponente(rc);
     }//GEN-LAST:event_jMenuItemReporConActionPerformed
 
-    private void modificarItems() {
-        Color color = null;
-        String tipoUsuario = " ";
+    /*Metodo encargado de modificar el color del "menuBar" , asi como colocar el nombre del cliente y 
+    su cargo en el hotel*/
+    private void setItems() {
+        int tipoImagen = 0;
+        int tipoImagen1 = 0;
         if (usuario.getTipo() == 1) {
-            color = new Color(246, 145, 1);
-            tipoUsuario = "Gerente";
-            jMenuGerente.setVisible(true);
+            tipoImagen = 1;
+            tipoImagen1 = 2;
+            tipoUsuario = "GERENTE";
         } else if (usuario.getTipo() == 2) {
-            color = new Color(70, 130, 180);
-            tipoUsuario = "Recepcion";
-            jMenuRecepcion.setVisible(true);
+            tipoImagen = 3;
+            tipoImagen1 = 4;
+            tipoUsuario = "RECEPCION";
         } else {
-            color = new Color(30, 144, 255);
-            tipoUsuario = "Restaurante";
-            jMenuRestaurante.setVisible(true);
+            tipoImagen = 5;
+            tipoImagen1 = 6;
+            tipoUsuario = "RESTAURANTE";
         }
-        menuBar.setBackground(color);
-        labelInformacion.setText(usuario.getNombre() + " " + usuario.getApellido() + " / " + tipoUsuario);
+        this.path = BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH + tipoImagen + IMAGE_EXTENSION;
+        this.path1 = BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH + tipoImagen1 + IMAGE_EXTENSION;
     }
 
+    /**
+     * Metodo encargado de añadir un nuevo componente al escritorio principal
+     *
+     * @param component
+     */
+    private void añadirComponente(Component component) {
+        PrincipalDesktop.add(component);
+        Dimension desktopSize = PrincipalDesktop.getSize();
+        Dimension FrameSize = component.getSize();
+        component.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - desktopSize.height) / 2);
+        component.show();
+    }
+
+    private void visualizarItems(){
+        if (usuario.getTipo() == 1) {
+            jMenuGerente.setVisible(true);
+        } else if (usuario.getTipo() == 2) {
+            jMenuRecepcion.setVisible(true);
+        } else {
+            jMenuRestaurante.setVisible(true);
+        }
+        this.labelInformacion.setText(this.tipoUsuario);
+        this.jLabelUsuario.setText("Usuario: " + this.usuario.getNombre() + " " + this.usuario.getApellido());
+    }
+    
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane PrincipalDesktop;
+    private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -661,7 +625,7 @@ public class HotelDescktop extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuOpciones;
     private javax.swing.JMenu jMenuRecepcion;
     private javax.swing.JMenu jMenuRestaurante;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelBackground;
     private javax.swing.JLabel labelInformacion;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables

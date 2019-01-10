@@ -1,4 +1,3 @@
-
 package hotelelbuendescanso;
 
 import project.usuario.frontend.SolicitadorUsuario;

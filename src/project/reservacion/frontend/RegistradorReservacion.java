@@ -1,15 +1,15 @@
 package project.reservacion.frontend;
 
 import hotelelbuendescanso.BaseDatos;
-import java.text.ParseException;
-import java.time.format.DateTimeParseException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import project.usuario.Usuario;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
-import project.cliente.backend.ManejadorCliente;
 import project.habitacion.backend.Habitacion;
 import project.habitacion.backend.ManejadorHabitacion;
 import project.reservacion.backend.ManejadorReservacion;
@@ -25,12 +25,15 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
     private List<Habitacion> listaHabit = null;
     private ObservableList<Habitacion> listaHabtObser = null;
     private Habitacion habitacionSelec = null;
+    public String path;
+    private final static String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH = "src/project/frontend/images/blur2.jpg";
 
     public RegistradorReservacion(BaseDatos DB, Usuario usr) {
         this.DB = DB;
         this.usuario = usr;
         this.listaHabit = new LinkedList<>();
         this.listaHabtObser = ObservableCollections.observableList(listaHabit);
+        this.path = BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH;
         initComponents();
     }
 
@@ -44,7 +47,13 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel(){
+            public void paintComponent(Graphics g){
+                ImageIcon im = new ImageIcon(path);
+                Image i = im.getImage();
+                g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);
+            }
+        };
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
@@ -54,9 +63,8 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         buttonVerificar = new javax.swing.JButton();
-        jPanelRegistro = new javax.swing.JPanel();
-        formattedTextFieldDPI = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
+        formattedTextFieldDPI = new javax.swing.JFormattedTextField();
         buttonRegistrar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabelMontoPagar = new javax.swing.JLabel();
@@ -119,7 +127,8 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanelRegistro.setBackground(new java.awt.Color(255, 99, 71));
+        jLabel6.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel6.setText("DPI*:");
 
         formattedTextFieldDPI.setBackground(new java.awt.Color(254, 254, 254));
         formattedTextFieldDPI.setBorder(javax.swing.BorderFactory.createEmptyBorder(7, 7, 7, 7));
@@ -130,9 +139,6 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         formattedTextFieldDPI.setCaretColor(new java.awt.Color(237, 71, 71));
-
-        jLabel6.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel6.setText("DPI*:");
 
         buttonRegistrar.setBackground(new java.awt.Color(70, 130, 180));
         buttonRegistrar.setFont(new java.awt.Font("Caviar Dreams", 0, 18)); // NOI18N
@@ -151,40 +157,6 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
         jLabelMontoPagar.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
         jLabelMontoPagar.setForeground(new java.awt.Color(254, 254, 254));
         jLabelMontoPagar.setText(" ");
-
-        javax.swing.GroupLayout jPanelRegistroLayout = new javax.swing.GroupLayout(jPanelRegistro);
-        jPanelRegistro.setLayout(jPanelRegistroLayout);
-        jPanelRegistroLayout.setHorizontalGroup(
-            jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRegistroLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(formattedTextFieldDPI, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(buttonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelMontoPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
-        );
-        jPanelRegistroLayout.setVerticalGroup(
-            jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRegistroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(formattedTextFieldDPI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(buttonRegistrar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRegistroLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabelMontoPagar))
-                .addContainerGap())
-        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -210,13 +182,21 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jDateChooserSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(formattedTextFieldDPI, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(buttonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabelMontoPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 32, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -235,9 +215,18 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
                     .addComponent(buttonVerificar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jPanelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(formattedTextFieldDPI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addComponent(buttonRegistrar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabelMontoPagar))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -258,20 +247,6 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistrarActionPerformed
-        ManejadorReservacion mr = new ManejadorReservacion(DB);
-        try {
-//            mc.verificarCliente(formattedTextFieldDPI.getText().trim(), this);
-            mr.setReservacion(formattedTextFieldDPI.getText().trim(), habitacionSelec.getNumero(), 
-                    jDateChooserInicio.getDate(), jDateChooserSalida.getDate(), habitacionSelec.getPrecio());
-            JOptionPane.showMessageDialog(rootPane, "Se ha registrado exitosamente la reservacion", "Accion exitosa", JOptionPane.INFORMATION_MESSAGE);
-            listaHabtObser.clear();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        buttonRegistrar.setEnabled(false);
-    }//GEN-LAST:event_buttonRegistrarActionPerformed
-
     private void buttonVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerificarActionPerformed
         if (jDateChooserInicio.getDate() == null || jDateChooserSalida.getDate() == null) {
             JOptionPane.showMessageDialog(rootPane, "No es posible filtrar las reservaciones, intentelo de nuevo", "Error", JOptionPane.ERROR_MESSAGE);
@@ -288,6 +263,20 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
         double monto = mr.getCantidadDias(jDateChooserInicio.getDate(), jDateChooserSalida.getDate()) * habitacionSelec.getPrecio();
         jLabelMontoPagar.setText("Q. " + monto);
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void buttonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistrarActionPerformed
+        ManejadorReservacion mr = new ManejadorReservacion(DB);
+        try {
+            //            mc.verificarCliente(formattedTextFieldDPI.getText().trim(), this);
+            mr.setReservacion(formattedTextFieldDPI.getText().trim(), habitacionSelec.getNumero(),
+                jDateChooserInicio.getDate(), jDateChooserSalida.getDate(), habitacionSelec.getPrecio());
+            JOptionPane.showMessageDialog(rootPane, "Se ha registrado exitosamente la reservacion", "Accion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            listaHabtObser.clear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        buttonRegistrar.setEnabled(false);
+    }//GEN-LAST:event_buttonRegistrarActionPerformed
 
     private void actualizarListas() {
         ManejadorHabitacion mh = new ManejadorHabitacion(DB);
@@ -328,7 +317,6 @@ public class RegistradorReservacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelMontoPagar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelRegistro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;

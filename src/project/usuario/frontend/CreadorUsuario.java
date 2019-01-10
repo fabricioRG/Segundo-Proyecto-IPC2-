@@ -304,7 +304,6 @@ public class CreadorUsuario extends javax.swing.JInternalFrame {
         textFieldApellido.setText("");
         textFieldPassword.setText("");
         textFieldUsuario.setText("");
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

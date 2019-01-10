@@ -23,13 +23,11 @@ import project.usuario.Usuario;
 public class ManejadorBaseDatos {
 
     private Connection connection = null;
-    private Statement declaracion = null;
     private PreparedStatement sentencia = null;
     private SimpleDateFormat fechaFormat = null;
 
     public ManejadorBaseDatos(BaseDatos DB) {
         connection = DB.getConection();
-        declaracion = DB.getStatement();
         fechaFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
@@ -37,7 +35,6 @@ public class ManejadorBaseDatos {
         List<Usuario> usuarios = new LinkedList<>();
         Usuario usr = null;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             if (opcion == 1) {
                 sentencia.setString(1, datoUsuario);
@@ -66,7 +63,6 @@ public class ManejadorBaseDatos {
 
     public void setUsuario(String accion, Usuario usr) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setInt(1, usr.getDPI());
             sentencia.setString(2, usr.getNombre());
@@ -83,7 +79,6 @@ public class ManejadorBaseDatos {
 
     public void updateUsuario(String accion, Usuario usr) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setString(1, usr.getNombre());
             sentencia.setString(2, usr.getApellido());
@@ -97,7 +92,6 @@ public class ManejadorBaseDatos {
 
     public void desactivarActivarUsuario(String accion, Usuario usuario) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setInt(1, usuario.getEstado());
             sentencia.setInt(2, usuario.getDPI());
@@ -112,7 +106,6 @@ public class ManejadorBaseDatos {
         List<Reservacion> reservaciones = new LinkedList<>();
         Reservacion reservacion = null;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             if (opcion == 1) {
                 sentencia.setString(1, dato);
@@ -143,7 +136,6 @@ public class ManejadorBaseDatos {
     public int getCantidadDias(String consulta, String inicio, String salida) {
         int cantidadDias = 0;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             sentencia.setString(1, salida);
             sentencia.setString(2, inicio);
@@ -160,7 +152,6 @@ public class ManejadorBaseDatos {
 
     public void setReservacion(String accion, Reservacion reservacion) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setInt(1, reservacion.getDpiCliente());
             sentencia.setInt(2, reservacion.getNoHabitacion());
@@ -176,7 +167,6 @@ public class ManejadorBaseDatos {
 
     public void deleteReservacion(String accion, int id) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setInt(1, id);
             sentencia.executeUpdate();
@@ -188,7 +178,6 @@ public class ManejadorBaseDatos {
 
     public void updateReservacion(String accion, Reservacion reserv) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setInt(1, reserv.getEstado());
             sentencia.setDouble(2, reserv.getMonto());
@@ -204,7 +193,6 @@ public class ManejadorBaseDatos {
         List<Habitacion> habitaciones = new LinkedList<>();
         Habitacion habitacion = null;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
             while (resultado.next()) {
@@ -227,7 +215,6 @@ public class ManejadorBaseDatos {
 
     public void updateHabitacion(String accion, String dato1, String dato2) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setString(1, dato1);
             sentencia.setString(2, dato2);
@@ -241,7 +228,6 @@ public class ManejadorBaseDatos {
     public Cliente getCliente(String consulta, String dato) {
         Cliente cliente = null;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             sentencia.setString(1, dato);
             ResultSet resultado = sentencia.executeQuery();
@@ -263,7 +249,6 @@ public class ManejadorBaseDatos {
         List<Cliente> clientes = new LinkedList<>();
         Cliente cliente = null;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             if (opcion == 1) {
                 sentencia.setString(1, dato);
@@ -289,7 +274,6 @@ public class ManejadorBaseDatos {
 
     public void setCliente(String accion, Cliente cliente) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setInt(1, cliente.getDpi());
             sentencia.setString(2, cliente.getNombre());
@@ -304,7 +288,6 @@ public class ManejadorBaseDatos {
 
     public void updateCliente(String accion, Cliente cliente) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setString(1, cliente.getNombre());
             sentencia.setString(2, cliente.getApellido());
@@ -319,7 +302,6 @@ public class ManejadorBaseDatos {
 
     public void setMenu(String accion, Menu menu) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setString(1, menu.getNombre());
             sentencia.setString(2, menu.getDescripcion());
@@ -336,7 +318,6 @@ public class ManejadorBaseDatos {
         List<Menu> elementosMenu = new LinkedList<>();
         Menu elemento = null;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             if (opcion == 1) {
                 sentencia.setString(1, dato);
@@ -365,7 +346,6 @@ public class ManejadorBaseDatos {
     public Menu getMenu(String consulta, int idMenu) {
         Menu elemento = null;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             sentencia.setInt(1, idMenu);
             ResultSet resultado = sentencia.executeQuery();
@@ -387,7 +367,6 @@ public class ManejadorBaseDatos {
 
     public void updateMenu(String accion, Menu menu, int opcion) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             if (opcion == 1) {
                 sentencia.setString(1, menu.getNombre());
@@ -406,7 +385,6 @@ public class ManejadorBaseDatos {
 
     public void setConsumo(String accion, Consumo consumo) {
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(accion);
             sentencia.setInt(1, consumo.getIdMenu());
             sentencia.setInt(2, consumo.getIdReservacion());
@@ -423,7 +401,6 @@ public class ManejadorBaseDatos {
         List<Consumo> listaConsumo = new LinkedList<>();
         Consumo consumo = null;
         try {
-            declaracion = connection.createStatement();
             sentencia = connection.prepareStatement(consulta);
             if (opcion == 1) {
                 sentencia.setString(1, dato);

@@ -1,6 +1,9 @@
 package project.usuario.frontend;
 
 import hotelelbuendescanso.BaseDatos;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import project.usuario.backend.ManejadorFrontEndUsuario;
 
@@ -13,12 +16,17 @@ public class SolicitadorUsuario extends javax.swing.JDialog {
     private boolean estado;
     private int areaTrabajo = 0;
     private BaseDatos DB = null;
+    public String path;
+    public final static String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH = "src/project/frontend/images/is1.jpg";
+    public final static String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH_FIELD1 = "src/project/frontend/images/buttons1.jpg";
+    public final static String BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH_FIELD2 = "src/project/frontend/images/buttons2.jpg";
 
     /**
      * Creates new form SolicitadorUsuario
      */
     public SolicitadorUsuario(java.awt.Frame parent, boolean modal, BaseDatos DB) {
         super(parent, modal);
+        this.path = BACKGROUNDD_IMAGE_PARENT_RELATIVE_PATH;
         initComponents();
         this.setTitle("Datos de usuario");
         this.setLocationRelativeTo(this);
@@ -34,7 +42,13 @@ public class SolicitadorUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel(){
+            public void paintComponent(Graphics g){
+                ImageIcon im = new ImageIcon(path);
+                Image i = im.getImage();
+                g.drawImage(i, 0, 0, this.getSize().width, this.getSize().height, this);
+            }
+        };
         ingresarUsuario = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -45,12 +59,13 @@ public class SolicitadorUsuario extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(25, 47, 68));
 
-        ingresarUsuario.setBackground(new java.awt.Color(47, 207, 201));
+        ingresarUsuario.setBackground(new java.awt.Color(254, 254, 254));
         ingresarUsuario.setFont(new java.awt.Font("Open Sans", 0, 20)); // NOI18N
-        ingresarUsuario.setForeground(new java.awt.Color(254, 254, 254));
+        ingresarUsuario.setForeground(new java.awt.Color(56, 2, 127));
         ingresarUsuario.setText("Ingresar");
         ingresarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,7 +73,7 @@ public class SolicitadorUsuario extends javax.swing.JDialog {
             }
         });
 
-        salirButton.setBackground(new java.awt.Color(254, 87, 87));
+        salirButton.setBackground(new java.awt.Color(181, 1, 37));
         salirButton.setForeground(new java.awt.Color(254, 254, 254));
         salirButton.setText("Salir");
         salirButton.addActionListener(new java.awt.event.ActionListener() {
@@ -73,9 +88,9 @@ public class SolicitadorUsuario extends javax.swing.JDialog {
         jLabel4.setForeground(new java.awt.Color(254, 254, 254));
         jLabel4.setText("Contraseña de usuario*:");
 
-        fieldPassword.setBackground(new java.awt.Color(25, 47, 68));
-        fieldPassword.setForeground(new java.awt.Color(254, 254, 254));
-        fieldPassword.setCaretColor(new java.awt.Color(254, 254, 254));
+        fieldPassword.setBackground(new java.awt.Color(254, 254, 254));
+        fieldPassword.setForeground(new java.awt.Color(181, 1, 37));
+        fieldPassword.setCaretColor(new java.awt.Color(181, 1, 37));
         fieldPassword.setMargin(new java.awt.Insets(5, 5, 5, 5));
         fieldPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,9 +98,9 @@ public class SolicitadorUsuario extends javax.swing.JDialog {
             }
         });
 
-        fieldNombre.setBackground(new java.awt.Color(25, 47, 68));
-        fieldNombre.setForeground(new java.awt.Color(254, 254, 254));
-        fieldNombre.setCaretColor(new java.awt.Color(254, 254, 254));
+        fieldNombre.setBackground(new java.awt.Color(254, 254, 254));
+        fieldNombre.setForeground(new java.awt.Color(181, 1, 37));
+        fieldNombre.setCaretColor(new java.awt.Color(181, 1, 37));
         fieldNombre.setMargin(new java.awt.Insets(5, 5, 5, 5));
 
         jLabel1.setFont(new java.awt.Font("Caviar Dreams", 0, 40)); // NOI18N
@@ -109,20 +124,20 @@ public class SolicitadorUsuario extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(fieldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                    .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldPassword))
                 .addGap(36, 36, 36))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(ingresarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(188, 188, 188)
+                        .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(181, 181, 181)
-                        .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(101, Short.MAX_VALUE))
+                        .addGap(91, 91, 91)
+                        .addComponent(ingresarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
